@@ -1,15 +1,3 @@
-function server()
-{
-   xmlhttp = new XMLHttpRequest();
-   xmlhttp.open("GET","http://localhost:8001/getQuizData", true);
-   xmlhttp.onreadystatechange=function(){
-         if (xmlhttp.readyState==4 && xmlhttp.status==200){
-           document.getElementById("questionNumber").innerHTML = JSON.parse(xmlhttp.responseText);
-         }
-   }
-   xmlhttp.send();
-}
-
 function beginQuiz(quizData) {
 
     var question;
@@ -17,15 +5,14 @@ function beginQuiz(quizData) {
     var answer;
     var userAnswer;
 
-    for (var question = 0; question < 2; question++) {
-        questionNumber = question + 1;
-
-        document.addEventListener("click", function(){
-            document.getElementById("questionNumber").innerHTML = questionNumber;
-            server();
-
-        });
+    req = new XMLHttpRequest();
+    req.onreadystatechange=function(){
+        if (req.readyState==4 && req.status==200){
+           console.log(req.responseText);
+        }
     }
+    req.open("GET","http://localhost:8001/getQuizData", true);
+    req.send();
 }
 function getRandomQuestionFrom(questions) {
     question = Math.floor(questions.length*Math.random);
@@ -37,7 +24,5 @@ function checkAnswer(question) {
 function changeElementProperty(element,property,value) {
     element.property = value;
 }
-
-document.getElementById("nextQuestionButton")
 
 beginQuiz();
