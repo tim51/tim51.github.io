@@ -7,15 +7,11 @@ http.createServer(function(request, response){
 
     if(path=="/getQuizData") {
       generateQuiz().then(function (succeedMessage) {
-        new Promise(function(resolve,reject) {
-          resolve(JSON.stringify(succeedMessage));
-        }).then(function (succeedMessage) {
           console.log("data sent:");
           console.log(succeedMessage);
           response.writeHead(200, { 'Content-Type': 'application/json'});
-          response.end(succeedMessage, "utf-8");
+          response.end(JSON.stringify(succeedMessage), "utf-8");
           console.log("done");
-        })
       })
     }
 
