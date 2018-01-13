@@ -6,12 +6,11 @@ http.createServer(function(request, response){
     try {
       var path = url.parse(request.url).pathname;
 
-      if(path=="/getQuizData") {
-        generateQuiz("quiz").then(function (succeedMessage) {
+      if(path.startsWith("/getQuiz/")) {
+        generateQuiz(path.slice(path.indexOf("/",1)+1)).then(function (succeedMessage) {
             console.log("data sent:" + succeedMessage);
             response.writeHead(200, { 'Content-Type': 'application/json'});
             response.end(JSON.stringify(succeedMessage), "utf-8");
-            console.log("done");
         })
       }
       else if(path=="/css/style.css"){
@@ -65,7 +64,9 @@ function generateQuiz(quiz) {
 }
 
 function getQuery(quiz) {
-  return "SELECT city , country FROM quiz.world_cities"
+  if (quiz == "cities") {
+    return "SELECT city , country FROM quiz.world_cities"
       + " ORDER BY RAND()" 
       + " LIMIT 10";
+  }
 }
