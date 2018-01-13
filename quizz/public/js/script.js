@@ -6,14 +6,14 @@ function getQuizData(quiz) {
            console.log(req.responseText);
         }
     }
-    req.open("GET","http://localhost:8001/getQuiz/"+quiz, true);
+    req.open("GET","http://localhost:8080/getQuiz/"+quiz, true);
     req.send();
 }
 
 window.onload = function() {
     var button = document.getElementById('nextQuestionButton')
     button.addEventListener("click", function(event) {
-        getQuizData("cities");
+        getQuizData("world_cities");
     });
     /* for compatibility
     button.addEventListener("click", {

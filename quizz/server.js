@@ -35,7 +35,7 @@ http.createServer(function(request, response){
     catch (error) {
       console.log(error);
     }
-}).listen(8001);
+}).listen(8080);
 console.log("server initialized");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ function generateQuiz(quiz) {
 }
 
 function getQuery(quiz) {
-  if (quiz == "cities") {
+  if (quiz == "world_cities") {
     return "SELECT city , country FROM quiz.world_cities"
       + " ORDER BY RAND()" 
       + " LIMIT 10";
