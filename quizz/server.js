@@ -54,33 +54,29 @@ console.log("server initialized");
 function generateQuiz() {
   return new Promise(function(succeed,fail) {
 
-    var mysql = require('mysql');
-    var con = mysql.createConnection({
-      host: "localhost",
-      user: "tim",
-      password: "myequal13A",
-      database: "quiz"
-    });
-
-    con.connect(function(err) {
-      if (err) {
-        fail(err);
-        throw err;
-      }
-      var query;
-      if(true) {
-        query =   "SELECT city , country FROM quiz.world_cities"
-                    + " ORDER BY RAND()" 
-                    + " LIMIT 10"
-      }
-      con.query(query, function (err, result, fields) {
-        if (err) {
-          fail(err);
-          throw err;
-        }
+    try {
+      var mysql = require('mysql');
+      var con = mysql.createConnection({
+        host: "localhost",
+        user: "tim",
+        password: "myequal13A",
+        database: "quiz"
+      });
+      con.connect();
+      con.query(getQuery(true), function (err, result, fields) {
         succeed(result);
       });
       con.end();
-    });
+    }
+    catch (error) {
+      fail(error);
+      throw error;
+    }
   })
+}
+
+function getQuery(quiz) {
+  return "SELECT city , country FROM quiz.world_cities"
+      + " ORDER BY RAND()" 
+      + " LIMIT 10";
 }
