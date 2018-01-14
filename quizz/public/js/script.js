@@ -1,10 +1,19 @@
 var quizName;
-var question;
-var correctAnswer;
-var answerA, answerB, answerC, answerD;
+var quizFormat;
+var quiz;
+var quizAnswers;
+
+//PAGE ELEMENTS
+var questionLabel;
+var questionNumberLabel;
+var quizNameLabel;
+var answerAButton, 
+    answerBButton, 
+    answerCButton, 
+    answerDButton;
 var nextQuestionButton;
 
-function getQuizData(quiz) {
+function getQuiz(quiz) {
     req = new XMLHttpRequest();
     req.onreadystatechange=function(){
         if (req.readyState==4 && req.status==200){
@@ -16,17 +25,49 @@ function getQuizData(quiz) {
     req.send();
 }
 
+function extractQuizData(quizData) {
+    quizFormat = quizData[0].quizFormat;
+
+    if (quizFormat.startsWith("multipleChoice")) {  //Multiple choice only takes 1to9;
+        for (var choice=0; choice<quizFormat[-1]; i++) {
+            for (var row = 1; row < quizData.length; row++) {
+
+            }
+        }
+    }
+}
+
 window.onload = function() {
-    nextQuestionButton = document.getElementById('nextQuestionButton')
+     
+    questionNumberLabel = document.getElementById('quesionNumberLabel')
+    quizNameLabel = document.getElementById('quizNameLabel');
+    questionLabel = document.getElementById('questionLabel');
+    answerAButton = document.getElementById('answerAButton');
+    answerBButton = document.getElementById('answerBButton');
+    answerCButton = document.getElementById('answerCButton');
+    answerDButton = document.getElementById('answerDButton');
+    nextQuestionButton = document.getElementById('nextQuestionButton');
+
     nextQuestionButton.addEventListener("click", function(event) {
-        getQuizData("world_cities");
+        getQuiz("world_cities");
     });
+
     /* for compatibility
     button.addEventListener("click", {
         handleEvent: function (event) {
-            getQuizData("cities");
+            getQuiz("cities");
         }
     });*/
+}
+
+function chooseAnswer(answer) {
+    if (!quizAnswers) {
+        quizAnswers= new Array[];
+    }
+    quizAnswers.push(new {
+        "Question": question,
+        "Answer": answer
+    })
 }
 
 
