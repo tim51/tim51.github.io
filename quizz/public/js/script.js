@@ -1,9 +1,15 @@
+var quizName;
+var question;
+var correctAnswer;
+var answerA, answerB, answerC, answerD;
+var nextQuestionButton;
+
 function getQuizData(quiz) {
-    console.log("click");
     req = new XMLHttpRequest();
     req.onreadystatechange=function(){
         if (req.readyState==4 && req.status==200){
            console.log(req.responseText);
+           return req.responseText;
         }
     }
     req.open("GET","http://localhost:8080/getQuiz/"+quiz, true);
@@ -11,8 +17,8 @@ function getQuizData(quiz) {
 }
 
 window.onload = function() {
-    var button = document.getElementById('nextQuestionButton')
-    button.addEventListener("click", function(event) {
+    nextQuestionButton = document.getElementById('nextQuestionButton')
+    nextQuestionButton.addEventListener("click", function(event) {
         getQuizData("world_cities");
     });
     /* for compatibility
