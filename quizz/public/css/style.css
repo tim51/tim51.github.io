@@ -28,7 +28,7 @@ body {
 	grid-column: 2/3;
 
 	display: grid;
-	grid-template-columns: repeat(12, auto); 
+	grid-template-columns: repeat(12, 1fr); 
 	grid-template-rows: auto auto auto auto auto; /*1q#andtimer 1question 2,3answer 4next*/
 	grid-column-gap: 0%;
 	grid-row-gap: 0%;

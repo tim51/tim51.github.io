@@ -1,7 +1,6 @@
 var quizName;
 var quizFormat;
 var quiz;
-var quizAnswers;
 
 //PAGE ELEMENTS
 var questionLabel;
@@ -14,17 +13,27 @@ var answerAButton,
 var nextQuestionButton;
 
 function getQuiz(quiz) {
-    req = new XMLHttpRequest();
-    req.onreadystatechange=function(){
-        if (req.readyState==4 && req.status==200){
-           console.log(req.responseText);
-           return req.responseText;
+    return new Promise(function (resolve,response) {
+        req = new XMLHttpRequest();
+        req.onreadystatechange=function(){
+            if (req.readyState==4 && req.status==200){
+                resolve(JSON.parse(req.responseText));
+            }
         }
-    }
-    req.open("GET","http://localhost:8080/getQuiz/"+quiz, true);
-    req.send();
+        req.open("GET","http://localhost:8080/getQuiz/"+quiz, true);
+        req.send();
+    }).catch(function(err) {
+        console.log(err);
+    })
 }
 
+function startQuiz(quiz) {
+    var questionNumber = 1;
+    questionLabel.innerHTML = quiz[questionNumber-1].question;
+    answerAButton.innerHTML = quiz[questionNumber-1].correct_answer;
+}
+//Dont need anymore
+/*
 function extractQuizData(quizData) {
     quizFormat = quizData[0].quizFormat;
 
@@ -36,10 +45,11 @@ function extractQuizData(quizData) {
         }
     }
 }
+*/
 
 window.onload = function() {
      
-    questionNumberLabel = document.getElementById('quesionNumberLabel')
+    questionNumberLabel = document.getElementById('quesionNumberLabel');
     quizNameLabel = document.getElementById('quizNameLabel');
     questionLabel = document.getElementById('questionLabel');
     answerAButton = document.getElementById('answerAButton');
@@ -49,7 +59,10 @@ window.onload = function() {
     nextQuestionButton = document.getElementById('nextQuestionButton');
 
     nextQuestionButton.addEventListener("click", function(event) {
-        getQuiz("world_cities");
+        getQuiz("ffff").then(function(resolved) {
+            console.log(resolved);
+            startQuiz(resolved);
+        })
     });
 
     /* for compatibility
@@ -62,22 +75,12 @@ window.onload = function() {
 
 function chooseAnswer(answer) {
     if (!quizAnswers) {
-        quizAnswers= new Array[];
+        quizAnswers= [];
     }
     quizAnswers.push(new {
         "Question": question,
         "Answer": answer
     })
-}
-
-
-
-function getRandomQuestionFrom(questions) {
-    question = Math.floor(questions.length*Math.random);
-    
-}
-function checkAnswer(question) {
-    return question.answer == userAnswer;
 }
 
 
