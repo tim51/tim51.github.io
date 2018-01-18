@@ -39,7 +39,7 @@ function getNextQuestion() {
     questionNumber += 1;
     if (questionNumber > quiz.length) {
         console.log(userAnswers);
-        endquiz();
+        endQuiz();
     }
     else {
         questionLabel.innerHTML = quiz[questionNumber-1].question;
