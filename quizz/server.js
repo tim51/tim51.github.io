@@ -13,6 +13,16 @@ http.createServer(function(request, response){
             response.end(JSON.stringify(succeedMessage), "utf-8");
         })
       }
+      else if(path.startsWith("/evaluateAnswers/")) {
+          var jsonString = '';
+          request.on('data', function (data) {
+              jsonString += data;
+          });
+
+          request.on('end', function () {
+              console.log(JSON.parse(jsonString));
+          });
+      }
       else if(path=="/css/style.css"){
         fs.readFile("./public/css/style.css", function(err,file) {
           response.writeHead(200, { 'Content-Type': 'text/css'});
