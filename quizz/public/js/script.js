@@ -20,7 +20,7 @@ function getQuiz(quiz) {
                 resolve(JSON.parse(http.responseText));
             }
         }
-        http.open("GET","http://localhost:8080/getQuiz/"+quiz, true);
+        http.open("GET","http://localhost:8080/quiz/"+quiz, true);
         http.send();
     }).catch(function(err) {
         console.log(err);
@@ -39,21 +39,23 @@ function getNextQuestion() {
     questionNumber += 1;
     if (questionNumber > quiz.length) {
         console.log(userAnswers);
-        endQuiz();
+        endQuiz().then(function(succeed) {
+            console.log(succeed);
+        })
     }
     else {
         questionLabel.innerHTML = quiz[questionNumber-1].question;
-        answerAButton.innerHTML = quiz[questionNumber-1].correct_answer;
-        answerBButton.innerHTML = quiz[questionNumber-1].correct_answer;
-        answerCButton.innerHTML = quiz[questionNumber-1].correct_answer;
-        answerDButton.innerHTML = quiz[questionNumber-1].correct_answer;
+        answerAButton.innerHTML = quiz[questionNumber-1].answerA;
+        answerBButton.innerHTML = quiz[questionNumber-1].answerA;
+        answerCButton.innerHTML = quiz[questionNumber-1].answerA;
+        answerDButton.innerHTML = quiz[questionNumber-1].answerA;
     }
 }
 
 function chooseAnswer(answer) {
     userAnswers.push({
-        "Question": quiz[questionNumber-1].question,
-        "Answer": answer
+        "question": quiz[questionNumber-1].question,
+        "answer": answer
     })
 }
 
@@ -66,27 +68,13 @@ function endQuiz() {
                 resolve(JSON.parse(http.responseText));
             }
         }
-        http.open("POST","http://localhost:8080/evaluateAnswers/", true);
+        http.open("POST","http://localhost:8080/submitAnswers/", true);
         http.setRequestHeader("Content-type", "application/JSON");
         http.send(JSON.stringify(userAnswers));
     }).catch(function(err) {
         console.log(err);
     })
 }
-//Dont need anymore
-/*
-function extractQuizData(quizData) {
-    quizFormat = quizData[0].quizFormat;
-
-    if (quizFormat.startsWith("multipleChoice")) {  //Multiple choice only takes 1to9;
-        for (var choice=0; choice<quizFormat[-1]; i++) {
-            for (var row = 1; row < quizData.length; row++) {
-
-            }
-        }
-    }
-}
-*/
 
 window.onload = function() {
      

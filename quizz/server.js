@@ -6,21 +6,25 @@ http.createServer(function(request, response){
     try {
       var path = url.parse(request.url).pathname;
 
-      if(path.startsWith("/getQuiz/")) {
+      if(path.startsWith("/quiz/")) {
         generateQuiz(path.slice(path.indexOf("/",1)+1)).then(function (succeedMessage) {
             console.log("data sent:" + succeedMessage);
             response.writeHead(200, { 'Content-Type': 'application/json'});
             response.end(JSON.stringify(succeedMessage), "utf-8");
         })
       }
-      else if(path.startsWith("/evaluateAnswers/")) {
+      else if(path.startsWith("/submitAnswers/")) {
           var jsonString = '';
           request.on('data', function (data) {
-              jsonString += data;
+            jsonString = getScore(JSON.parse(data)).then(function(resolved) {
+              jsonString = JSON.stringify(resolved);
+              response.writeHead(200, { 'Content-Type': 'application/json'});
+              response.end(JSON.stringify(resolved), "utf-8");
+            })
           });
 
           request.on('end', function () {
-              console.log(JSON.parse(jsonString));
+              
           });
       }
       else if(path=="/css/style.css"){
@@ -86,7 +90,6 @@ function generateWrongAnswers(correctAnswer) {
         });
         con.connect();
         con.query("SELECT DISTINCT correct_answer FROM quiz.questions WHERE correct_answer NOT LIKE '%"+correctAnswer+"%' ORDER BY RAND() LIMIT 3", function(err,result,fields) {
-          console.log(result);
           succeed(result);
         })
     }
@@ -96,11 +99,45 @@ function generateWrongAnswers(correctAnswer) {
   })
 }
 function getQuery(quiz) {
-  return "SELECT question, correct_answer FROM quiz.questions"
+  return "SELECT question, correct_answer AS answerA FROM quiz.questions"
       + " ORDER BY RAND()" 
       + " LIMIT 10";
 }
 generateWrongAnswers("JAPAN");
+
+function getScore(answers) {
+  return new Promise(function(resolve,response) {
+    //GENERATE QUERY
+    var query = "SELECT question, correct_answer FROM quiz.questions WHERE"
+    for (var i = 0; i < answers.length; i++) {
+      query += " (question LIKE '%"+answers[i].question+"%' AND correct_answer LIKE '%"+answers[i].answer+"%')";
+      if (i < answers.length-1) {
+        query += " OR"
+      }
+    }
+    //GET FROM DATABASE
+    try {
+      var mysql = require('mysql');
+      var question;
+      var answer;
+      var con = mysql.createConnection({
+        host: "localhost",
+        user: "tim",
+        password: "myequal13A",
+        database: "quiz"
+      });
+      con.connect();
+      con.query(query, function(err,result,fields) {
+        console.log("Correct answers: "+result);
+        console.log("Score: "+result.length);
+        resolve(result);
+      })
+    }
+    catch (error){
+      console.log(error);
+    }
+  })
+}
 
 //INPUTING QUESTIONS AND ANSWERS INTO DATABASE==============================================================================
 /*
