@@ -39,8 +39,9 @@ function getNextQuestion() {
     questionNumber += 1;
     if (questionNumber > quiz.length) {
         console.log(userAnswers);
-        endQuiz().then(function(succeed) {
+        submitQuiz().then(function(succeed) {
             console.log(succeed);
+
         })
     }
     else {
@@ -48,7 +49,7 @@ function getNextQuestion() {
         answerAButton.innerHTML = quiz[questionNumber-1].answerA;
         answerBButton.innerHTML = quiz[questionNumber-1].answerA;
         answerCButton.innerHTML = quiz[questionNumber-1].answerA;
-        answerDButton.innerHTML = quiz[questionNumber-1].answerA;
+        answerDButton.innerHTML = "Wrong";
     }
 }
 
@@ -59,7 +60,7 @@ function chooseAnswer(answer) {
     })
 }
 
-function endQuiz() {
+function submitQuiz() {
     return new Promise(function (resolve,response) {
         http = new XMLHttpRequest();
 

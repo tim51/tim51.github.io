@@ -8,7 +8,6 @@ http.createServer(function(request, response){
 
       if(path.startsWith("/quiz/")) {
         generateQuiz(path.slice(path.indexOf("/",1)+1)).then(function (succeedMessage) {
-            console.log("data sent:" + succeedMessage);
             response.writeHead(200, { 'Content-Type': 'application/json'});
             response.end(JSON.stringify(succeedMessage), "utf-8");
         })
@@ -22,9 +21,7 @@ http.createServer(function(request, response){
               response.end(JSON.stringify(resolved), "utf-8");
             })
           });
-
           request.on('end', function () {
-              
           });
       }
       else if(path=="/css/style.css"){
@@ -128,8 +125,6 @@ function getScore(answers) {
       });
       con.connect();
       con.query(query, function(err,result,fields) {
-        console.log("Correct answers: "+result);
-        console.log("Score: "+result.length);
         resolve(result);
       })
     }
@@ -139,7 +134,7 @@ function getScore(answers) {
   })
 }
 
-//INPUTING QUESTIONS AND ANSWERS INTO DATABASE==============================================================================
+//INPUTING QUESTIONS AND ANSWERS INTO DATABASE// SHOULD BE IN A SEPERATE FILE==============================================================================
 /*
 new Promise(function (resolve, response) {
   var mysql = require('mysql');
