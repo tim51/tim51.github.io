@@ -4,12 +4,7 @@ body {
 	padding: 0;
 	height: auto;
 }
-.wrapper{ 
-	display: grid;
-	grid-template-columns: 1fr minmax(auto,800px) 1fr; /* */
-	grid-template-rows: 5em auto auto; /* 1header 2quiz 3footer*/
-	height: auto;
-}
+
 .header {
 	grid-column: 1/ end;
 	grid-row: 1/2;
@@ -23,6 +18,21 @@ body {
 	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 	text-align: center;
 }
+.main {
+	margin: auto;
+	height: 50vh;
+	width: auto;
+	max-width: 1200px;
+	background-color: white;
+}
+.wrapper{ 
+	display: grid;
+	grid-template-columns: 1fr minmax(auto,800px) 1fr; /* */
+	grid-template-rows: 5em auto auto; /* 1header 2quiz 3footer*/
+	height: auto;
+}
+/*quiz*/
+
 #quizInstructions{
 	grid-column: 1/13;
 	grid-row: 2/3;

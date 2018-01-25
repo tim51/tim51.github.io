@@ -1,6 +1,7 @@
-var http = require('http'),
-      fs = require('fs'),
-     url = require('url');
+var http = require('http');
+var fs = require('fs');
+var url = require('url');
+var quizManager = require("./quizManager.js");
 
 http.createServer(function(request, response){
     try {
@@ -50,57 +51,8 @@ http.createServer(function(request, response){
 console.log("server initialized");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function generateQuiz(quiz) {
-  return new Promise(function(succeed,fail) {
-    try {
-      var mysql = require('mysql');
-      var con = mysql.createConnection({
-        host: "localhost",
-        user: "tim",
-        password: "myequal13A",
-        database: "quiz"
-      });
-      con.connect();
-      con.query(getQuery(quiz), function (err, result, fields) {
-        succeed(result);
-      });
-      con.end();
-    }
-    catch (error) {
-      fail(error);
-      return null;
-    }
-  })
-}
 
-function generateWrongAnswers(correctAnswer) {
-  return new Promise(function(succeed, fail) {
-    try {
-        var mysql = require('mysql');
-        var question;
-        var answer;
-        var con = mysql.createConnection({
-          host: "localhost",
-          user: "tim",
-          password: "myequal13A",
-          database: "quiz"
-        });
-        con.connect();
-        con.query("SELECT DISTINCT correct_answer FROM quiz.questions WHERE correct_answer NOT LIKE '%"+correctAnswer+"%' ORDER BY RAND() LIMIT 3", function(err,result,fields) {
-          succeed(result);
-        })
-    }
-    catch (error){
-      console.log(error);
-    }
-  })
-}
-function getQuery(quiz) {
-  return "SELECT question, correct_answer AS answerA FROM quiz.questions"
-      + " ORDER BY RAND()" 
-      + " LIMIT 10";
-}
-generateWrongAnswers("JAPAN");
+
 
 function getScore(answers) {
   return new Promise(function(resolve,response) {
@@ -134,51 +86,30 @@ function getScore(answers) {
   })
 }
 
-//INPUTING QUESTIONS AND ANSWERS INTO DATABASE// SHOULD BE IN A SEPERATE FILE==============================================================================
 /*
-new Promise(function (resolve, response) {
-  var mysql = require('mysql');
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "tim",
-    password: "myequal13A",
-    database: "quiz"
-  });
-  con.connect();
-  con.query("SELECT city, country FROM quiz.world_cities", function(err,result,fields) {
-    var questions = [];
-    var results = 0;
-    for (row = 0; row< result.length; row++) {
-      questions.push( {
-        "question" : "Where is "+result[row].city +" located?",
-        "answer" : result[row].country
-      })
-      results++;
-      if (results = result.length) {
-        resolve(questions);
-      }
-    }
-  })
-}).then(function (succeed) {
-  var mysql = require('mysql');
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "tim",
-    password: "myequal13A",
-    database: "quiz"
-  });
-  con.connect();
-  for (var row=0; row<succeed.length; row++) {
-     //           "INSERT INTO `quiz`.`Questions` (`question`, `correct_answer`) VALUES ('what', 'answers');"
-    var query = "INSERT INTO quiz.Questions (question, correct_answer) VALUES ('"+succeed[row].question+"', '"+succeed[row].answer+"');";
-    console.log(query);
-    con.query(query, function(err,result,fields) {
-      console.log(err,result);
-    })
-  }
-
+quizManager.addQuiz({
+  "title": "basic math",
+  "author": "Tim",
+  "questions": [
+      {
+          "question":"What is 5*7?",
+          "answers": [{
+              "answer": 34,
+              "correct": 0
+          }, {
+              "answer": 35,
+              "correct": 1 
+          }]
+      },{
+          "question":"What is 4*3?",
+          "answers": [{
+              "answer": 12,
+              "correct": 1
+          }, {
+              "answer": 10,
+              "correct": 0 
+          }]
+      }]
 })
 */
-//==============================================================================================================
-
 
