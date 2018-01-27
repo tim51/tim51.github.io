@@ -1,38 +1,173 @@
+:focus {
+	outline: none !important;
+}
+input[type=text] {
+	font: normal 1em 'Arial','sans-serif';
+}
 body {
-	background-color: rgb(54, 123, 179);
+	background-color: rgb(223, 233, 233);
 	margin: 0;
 	padding: 0;
-	height: auto;
+	font-size: 14px;
+	font-family: 'verdana', 'sans-serif';
 }
-
+/*---------------------------------HEADER-----------------------------------*/
 .header {
-	grid-column: 1/ end;
-	grid-row: 1/2;
-
-	background-color: rgb(60, 130, 170);
-	border-bottom: 1px solid rgb(143, 193, 250);
-	box-shadow: 0px 3px 10px rgb(23, 48, 56);
-	color: aliceblue;
-	font-variant: bold;
-	font-size: 4em;
-	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-	text-align: center;
-}
-.main {
-	margin: auto;
-	height: 50vh;
-	width: auto;
-	max-width: 1200px;
+	position: fixed;
+	width: 100%;
 	background-color: white;
+	border-top: 2px solid rgb(255, 68, 0);
+	border-bottom: 1px solid lightgray;
+	box-shadow: 0px 1px 1px lightgray;
+	text-align: center;
+	top: 0;
+	z-index: 100;
 }
-.wrapper{ 
+.topNav {
+	margin: auto;
+	max-width: 1000px;
+	overflow: hidden;
+}
+.navItem {
+	float: left;
+	margin: 0;
+	padding: 1em;
+	font: 1em 'verdana', 'sans-serif';
+	text-decoration: unset;
+	color: black;
+	display: block;
+}
+.navItem:hover { 
+	background-color: lightgray;
+}
+.navItem.active {
+	box-shadow:  inset 0px -2px rgb(255, 68, 0);
+}
+.searchContainer {
+	float: right;
+}
+.searchContainer *{
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 0.5em;
+	border: 1px solid gray;
+}
+.searchContainer input[type=text] {
+	border-bottom-left-radius: 0.5em;
+	border-top-left-radius: 0.5em;
+	width: 15em;
+	font: normal 1em 'arial','sans-serif';
+	padding-left: 1em;
+	padding-right: 0.4em;
+}
+.searchContainer input[type=text]:hover{
+	background-color: unset;
+}
+.searchContainer button{
+	border-bottom-right-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+	font: normal 1em 'arial','sans-serif';
+}
+/*--------------------------------MAIN--------------------------------------------*/
+.wrapper{
+	margin: auto;
+	padding-left: 1%;
+	padding-right: 1%;
+	height: 2000px;
+	width: auto;
+	max-width: 1000px;
+	background-color: white;
+	border-left: 1px solid darkgray;
+	border-right: 1px solid darkgray;
+}
+.mainHeading {
+	padding-top: 2em;
+	font: 2.5em 'Segoe UI','Arial','sans-serif';
+	text-transform: uppercase;
+}
+/*---------------Quiz Form------------*/
+createQuizForm {
+	padding: 10%;
+	margin-top: 10%;
+}
+.createQuestionTable {
+	table-layout: fixed;
+	width: 100%;
+	margin-top: 1em;
+	border-collapse: collapse;
+}
+[contenteditable="true"] {
+	overflow: hidden;
+	white-space: nowrap;
+}
+[contenteditable="true"] br {
+    display:none;
+}
+[contenteditable="true"] * {
+    display:inline;
+    white-space:nowrap;
+}
+.createQuestionTable > tbody > tr > td, .createQuestionTable th {
+    border: 1px solid #bbb;
+    padding: 8px;
+}
+.createQuestionTable th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+.createQuestionTable > tbody > tr > th:first-child {
+	width: 2em;
+}
+.createQuestionTable > tbody > tr > th:nth-child(2) {
+	width: 40%;
+}
+.createQuestionTable > tbody > tr > th:nth-child(3) {
+	width: 1fr;
+}
+.createQuestionTable > tbody > tr > td:last-child {
+	padding: 0;
+}
+.createQuestionTable > tbody > tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+.createQuestionTable > tbody > tr:hover {
+	background-color: #ddd;
+}
+.createQuestionTable .addQuestionButton {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+.answerTable {
+	table-layout: fixed
+	width: 100%;
+	margin: 0;
+	border-collapse: collapse;
+	padding: 0;
+}
+.answerTable td {
+	padding: 0.5em;
+}
+.answerTable td:last-child {
+	width: 1em;
+}
+.answerTable tr:not(:first-child) {
+	border-top: 1px solid #bbb;
+}
+.answerTable input[type="checkbox"]{
+	float: right;
+}
+
+/*quiz*/
+.wrapper2{ 
 	display: grid;
 	grid-template-columns: 1fr minmax(auto,800px) 1fr; /* */
 	grid-template-rows: 5em auto auto; /* 1header 2quiz 3footer*/
 	height: auto;
 }
-/*quiz*/
-
 #quizInstructions{
 	grid-column: 1/13;
 	grid-row: 2/3;
