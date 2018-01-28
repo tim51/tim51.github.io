@@ -86,10 +86,6 @@ body {
 	text-transform: uppercase;
 }
 /*---------------Quiz Form------------*/
-createQuizForm {
-	padding: 10%;
-	margin-top: 10%;
-}
 .createQuestionTable {
 	table-layout: fixed;
 	width: 100%;
@@ -275,4 +271,3 @@ createQuizForm {
 	border-radius: 10px;
 	border: 2px solid white;
 }
-

@@ -86,6 +86,7 @@ function getScore(answers) {
   })
 }
 
+
 /*
 quizManager.addQuiz({
   "title": "basic math",
