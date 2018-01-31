@@ -1,0 +1,56 @@
+.header {
+	position: fixed;
+	width: 100%;
+	background-color: white;
+	border-top: 2px solid rgb(255, 68, 0);
+	border-bottom: 1px solid lightgray;
+	box-shadow: 0px 1px 1px lightgray;
+	text-align: center;
+	top: 0;
+	z-index: 100;
+}
+.topNav {
+	margin: auto;
+	max-width: 1000px;
+	overflow: hidden;
+}
+.navItem {
+	float: left;
+	margin: 0;
+	padding: 1em;
+	font: 1em 'verdana', 'sans-serif';
+	text-decoration: unset;
+	color: black;
+	display: block;
+}
+.navItem:hover { 
+	background-color: lightgray;
+}
+.navItem.active {
+	box-shadow:  inset 0px -2px rgb(255, 68, 0);
+}
+.searchContainer {
+	float: right;
+}
+.searchContainer *{
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 0.5em;
+	border: 1px solid gray;
+}
+.searchContainer input[type=text] {
+	border-bottom-left-radius: 0.5em;
+	border-top-left-radius: 0.5em;
+	width: 15em;
+	font: normal 1em 'arial','sans-serif';
+	padding-left: 1em;
+	padding-right: 0.4em;
+}
+.searchContainer input[type=text]:hover{
+	background-color: unset;
+}
+.searchContainer button{
+	border-bottom-right-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+	font: normal 1em 'arial','sans-serif';
+}
