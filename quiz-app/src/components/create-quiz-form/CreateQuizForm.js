@@ -6,6 +6,7 @@ class CreateQuizForm extends React.Component {
         this.state = {
             quizTitle: null,
             author: null,
+            description: null,
             questions: [],
         }
 
@@ -34,16 +35,13 @@ class CreateQuizForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSumbit}>
-                <p>a</p>
-                <p>b</p>
-                <p>c</p>
-                <p>d</p>
                 <InputField label='Quiz Title' maxCharacters='12'/>
                 <InputField label='Author' maxCharacters='12'/>
                 <ol>
                     {this.state.questions}
                 </ol>
                 <button onClick={this.handleSubmit}>Submit</button>
+                <EditableList componentList={[<InputField label='Author' maxCharacters='12'/>]} componentTemplate={<InputField label='Author' maxCharacters='12'/>}/>
             </form>
         )
         /*
@@ -110,5 +108,45 @@ function QuestionListItem(props) {
         </li>
     )
 }
+
+class EditableList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            componentList: props.componentList?props.componentList:[],
+        }
+        this.componentTemplate = props.componentTemplate;
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+    
+
+    handleClick(event) {
+        if(event.target.className === 'addItemButton') {
+            this.setState(prevState => ({
+                componentList: prevState.componentList.concat(this.componentTemplate),
+            }));
+        }
+        if(event.target.className === 'deleteItemButton') {
+            let componentIndex = this.state.componentList.indexOf(event.parentNode);
+            alert(event.target)
+            this.setState(prevState => ({
+                componentList: prevState.componentList.splice(componentIndex,1)}))
+        }
+    }
+    render() {
+        let componentList = this.state.componentList;
+
+        return (
+            <div>
+                <ul>
+                    {componentList.map((component,index) => <li key={index}>{component}<button className='deleteItemButton' onClick={this.handleClick}>x</button></li>)}
+                </ul>
+                <button className='addItemButton' onClick={this.handleClick}>+</button>
+            </div>
+        )
+    }
+}
+
 
 export default CreateQuizForm
