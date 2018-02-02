@@ -87,7 +87,7 @@ class CreateQuizForm extends React.Component {
                 <textarea id="description-textarea" name="description" onChange={this.handleChange} ></textarea>
               </div>
               {this.renderQuestionList()}
-              <button className="add-question-button" onClick={this.handleClick}>add q</button>
+              <button className="add-question-button" onClick={this.handleClick}>add question</button>
               <button id="submit-button" type="submit">Submit</button>
             </form>
         )
@@ -128,12 +128,12 @@ class QuestionListItem extends React.Component {
               <div className="correct-answer-wrapper">
                 <label className="correct-answer-label">Correct: </label>
                 {this.renderCorrectAnswerList()}
-                <button className="add-answer-button" onClick={props.onClick}>add a</button>
+                <button className="add-answer-button" onClick={this.props.onClick}>add answer</button>
               </div>
               <div className="incorrect-answer-wrapper">
                 <label>Incorrect: </label>
                 {this.renderIncorrectAnswerList()}
-                <button className="add-answer-button" onClick={props.onClick}>add a</button>
+                <button className="add-answer-button" onClick={this.props.onClick}>add answer</button>
               </div>
             </div>
         )
