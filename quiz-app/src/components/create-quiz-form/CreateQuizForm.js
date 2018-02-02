@@ -74,17 +74,17 @@ class CreateQuizForm extends React.Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-              <div id="title-wrapper">
-                <label id="title-label">Title: </label>
-                <input id="title-input" name="title" type="text" onChange={this.handleChange} ></input>
+              <div className="title-wrapper">
+                <label className="title-label">Title: </label>
+                <input className="title-input" type="text" onChange={this.handleChange} ></input>
               </div>  
-              <div id="author-wrapper">
-                <label id="author-wrapper">Author: </label>
-                <input id="author-input" name="author" type="text" onChange={this.handleChange} ></input>
+              <div className="author-wrapper">
+                <label className="author-wrapper">Author: </label>
+                <input className="author-input" type="text" onChange={this.handleChange} ></input>
               </div> 
-              <div id="description-wrapper">
-                <label id="description-label">Description: </label>
-                <textarea id="description-textarea" name="description" onChange={this.handleChange} ></textarea>
+              <div className="description-wrapper">
+                <label className="description-label">Description: </label>
+                <textarea className="description-textarea" onChange={this.handleChange} ></textarea>
               </div>
               {this.renderQuestionList()}
               <button className="add-question-button" onClick={this.handleClick}>add question</button>
