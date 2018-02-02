@@ -1,5 +1,6 @@
 import React from 'react';
 import EditableList from './EditableList';
+import './CreateQuizForm.css';
 
 class CreateQuizForm extends React.Component {
     constructor(props) {
@@ -98,11 +99,11 @@ class QuestionListItem extends React.Component {
 
     renderCorrectAnswerList() {
         return (
-            <EditableList addItemButtonClassName="add-correct-answer-button"
+            <EditableList addItemButtonClassName="add-answer-button"
                           addItemButtonText="add correct answer"
                           deleteItemButtonClassName="delete-answer-button"
                           deleteItemButtonText="delete answer"
-                          list={this.props.question.correctAnswers.map(answer => <div>{answer}</div>)}
+                          list={this.props.question.correctAnswers.map(answer => <AnswerListItem answer={answer}/>)}
                           listClassName="answer-list"
                           onClick={this.props.onClick}
                           />
@@ -111,11 +112,11 @@ class QuestionListItem extends React.Component {
 
     renderIncorrectAnswerList() {
         return (
-            <EditableList addItemButtonClassName="add-incorrect-answer-button"
+            <EditableList addItemButtonClassName="add-answer-button"
                           addItemButtonText="add incorrect answer"
                           deleteItemButtonClassName="delete-answer-button"
                           deleteItemButtonText="delete answer"
-                          list={this.props.question.incorrectAnswers.map(answer => <div>{answer}</div>)}
+                          list={this.props.question.incorrectAnswers.map(answer => <AnswerListItem answer={answer}/>)}
                           listClassName="answer-list"
                           onClick={this.props.onClick}
                           />
@@ -124,20 +125,29 @@ class QuestionListItem extends React.Component {
 
     render() {
         return (
-            <div className="question-wrapper">
-              <label>Question: </label><input className="question-input" type="text" onChange={this.props.onChange} defaultValue={this.props.question.question}></input>
-              <label>Correct: </label>{this.renderCorrectAnswerList()}
-              <label>Incorrect: </label>{this.renderIncorrectAnswerList()}
+            <div className="question-item-wrapper">
+              <div className="question-wrapper">
+                <label className="question-label">Question: </label>
+                <input className="question-input" type="text" onChange={this.props.onChange} defaultValue={this.props.question.question}></input>
+              </div>
+              <div className="correct-answer-wrapper">
+                <label className="correct-answer-label">Correct: </label>
+                {this.renderCorrectAnswerList()}
+              </div>
+              <div className="incorrect-answer-wrapper">
+                <label>Incorrect: </label>
+                {this.renderIncorrectAnswerList()}
+              </div>
             </div>
         )
     }
 }
 
-class AnswerItem extends React.Component {
+class AnswerListItem extends React.Component {
 
     render() {
         return (
-            <div><input type="text" initialValue={this.props.answer}></input><button></button></div>
+            <input className="answer-input" type="text" defaultValue={this.props.answer}></input>
         )
     }
 }
