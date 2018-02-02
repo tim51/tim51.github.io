@@ -1,5 +1,4 @@
 import React from 'react';
-import EditableList from './EditableList';
 
 class CreateQuizForm extends React.Component {
     constructor(props) {
@@ -8,7 +7,12 @@ class CreateQuizForm extends React.Component {
             title: null,
             author: null,
             description: null,
-            questions: [],
+            questions: [
+                {
+                    question: "1+1?",
+                    correctAnswers: ["2"],
+                    incorrectAnswers: ["1","3"], 
+                }],
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,19 +49,13 @@ class CreateQuizForm extends React.Component {
     handleClick(event) {
         let state = {...this.state};
 
-        if (event.target.className === "addItemButton") {
-            this.setState({questions: state.questions.concat({question: null, answers: []})})
+        if (event.target.className === "add-question-button") {
+            this.setState({questions: state.questions.concat({
+                question: null,
+                correctAnswers: [], 
+                incorrectAnswers: [],
+            })})
         }
-        if (event.target.className === "removeItemButton") {    //doesnt work
-            this.setState({questions: state.questions.splice(0,1)})
-        }
-    }
-
-
-    renderQuestions() {
-        return (
-            this.state.questions.map((question,index)=>(<Question question={question} id={index} onChange={this.handleChange}/>))
-        )
     }
 
     render() {
@@ -75,19 +73,84 @@ class CreateQuizForm extends React.Component {
                 <label id="description-label">Description: </label>
                 <textarea id="description-textarea" name="description" onChange={this.handleChange} ></textarea>
               </div>
-              <EditableList onClick={this.handleClick} components={this.renderQuestions()} />
+              <QuestionList questions={this.state.questions} onClick={this.handleClick}/>
               <button id="submit-button" type="submit">Submit</button>
             </form>
         )
     }
 }
 
-class Question extends React.Component {
+class QuestionList extends React.Component {
+
+    render() {
+        
+        let questionList = this.props.questions.map((question,index) => (<li key={index}> <QuestionListItem id={index} question={question}/> </li>))
+
+        return (
+            <div>
+              <ul>
+                {questionList}
+              </ul>
+              <button className="add-question-button" onClick={this.props.onClick}>Add Question</button>
+            </div>
+        )
+    }
+}
+
+class QuestionListItem extends React.Component {
 
     render() {
         return (
             <div className="question-wrapper" id={this.props.id}>
-              <input className="question-input" id={this.props.id} name="question" type="text" onChange={this.props.onChange}></input>
+              <label>Question: </label><input className="question-input" id={this.props.id} type="text" onChange={this.props.onChange} defaultValue={this.props.question.question}></input>
+              <AnswerList label="Correct answers: " answers={this.props.question.correctAnswers}/>
+              <AnswerList label="Incorrect answers: " answers={this.props.question.incorrectAnswers}/>
+            </div>
+        )
+    }
+}
+
+class AnswerList extends React.Component {
+    
+    render() {
+        
+        let answerList = this.props.answers.map((answer,index) => (<li key={index}> <input type="text" defaultValue={answer}></input> </li>))
+        
+        return (
+            <div>
+              <label>{this.props.label}</label>
+              <ul>
+                {answerList}
+                <button className="add-answer-button" onClick={this.props.onClick}>Add Answer</button>
+              </ul>
+              
+            </div>
+        )
+    }
+}
+
+class AnswerItem extends React.Component {
+
+    render() {
+        return (
+            <div><input type="text" initialValue={this.props.answer}></input><button></button></div>
+        )
+    }
+}
+
+class EditableList extends React.Component {
+
+    render() {
+
+        let list = this.props.components.map((component,index) => (<li key={index}> {component} <button>x</button></li>))
+
+        return (
+            <div className={this.props.className}>
+              <label>{this.props.label}</label>
+              <ul>
+                {list}
+              </ul>
+              <button className={this.props.addButtonClassName} onClick={this.props.onClick}>{this.props.addButtonText}</button>
             </div>
         )
     }

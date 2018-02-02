@@ -48,5 +48,10 @@ class Test extends React.Component {
 }
 
 
-ReactDOM.render(<CreateQuizForm />, document.getElementById('root'));
+ReactDOM.render(<EditableList list={[<EditableList list={[<label>1a</label>,<label>2b</label>,1,'2',3]} 
+onClick={(event)=>console.log(event.target.previousSibling)}
+addItemButtonText="add" />,1,'2',3]} 
+                              onClick={(event)=>console.log(event.target.previousSibling)}
+                              addItemButtonText="add" />
+                                                , document.getElementById('root'));
 registerServiceWorker();
