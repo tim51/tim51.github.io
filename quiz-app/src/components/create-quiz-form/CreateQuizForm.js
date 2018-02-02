@@ -62,9 +62,7 @@ class CreateQuizForm extends React.Component {
 
     renderQuestionList() {
         return (
-            <EditableList addItemButtonClassName="add-question-button"
-                          addItemButtonText="add question"
-                          deleteItemButtonClassName="delete-question-button"
+            <EditableList deleteItemButtonClassName="delete-question-button"
                           deleteItemButtonText="delete question"
                           list={this.state.questions.map(question=><QuestionListItem onClick={this.handleClick} question={question}/>)}
                           listClassName="question-list"
@@ -89,6 +87,7 @@ class CreateQuizForm extends React.Component {
                 <textarea id="description-textarea" name="description" onChange={this.handleChange} ></textarea>
               </div>
               {this.renderQuestionList()}
+              <button className="add-question-button" onClick={this.handleClick}>add q</button>
               <button id="submit-button" type="submit">Submit</button>
             </form>
         )
@@ -99,9 +98,7 @@ class QuestionListItem extends React.Component {
 
     renderCorrectAnswerList() {
         return (
-            <EditableList addItemButtonClassName="add-answer-button"
-                          addItemButtonText="add correct answer"
-                          deleteItemButtonClassName="delete-answer-button"
+            <EditableList deleteItemButtonClassName="delete-answer-button"
                           deleteItemButtonText="delete answer"
                           list={this.props.question.correctAnswers.map(answer => <AnswerListItem answer={answer}/>)}
                           listClassName="answer-list"
@@ -112,9 +109,7 @@ class QuestionListItem extends React.Component {
 
     renderIncorrectAnswerList() {
         return (
-            <EditableList addItemButtonClassName="add-answer-button"
-                          addItemButtonText="add incorrect answer"
-                          deleteItemButtonClassName="delete-answer-button"
+            <EditableList deleteItemButtonClassName="delete-answer-button"
                           deleteItemButtonText="delete answer"
                           list={this.props.question.incorrectAnswers.map(answer => <AnswerListItem answer={answer}/>)}
                           listClassName="answer-list"
@@ -133,10 +128,12 @@ class QuestionListItem extends React.Component {
               <div className="correct-answer-wrapper">
                 <label className="correct-answer-label">Correct: </label>
                 {this.renderCorrectAnswerList()}
+                <button className="add-answer-button" onClick={props.onClick}>add a</button>
               </div>
               <div className="incorrect-answer-wrapper">
                 <label>Incorrect: </label>
                 {this.renderIncorrectAnswerList()}
+                <button className="add-answer-button" onClick={props.onClick}>add a</button>
               </div>
             </div>
         )
