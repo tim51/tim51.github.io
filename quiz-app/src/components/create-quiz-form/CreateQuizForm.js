@@ -30,21 +30,21 @@ class CreateQuizForm extends React.Component {
     handleChange(event) {
         let state = {...this.state};
 
-        if (event.target.id === "title-input") {
+        if (event.target.className === "title-input") {
             this.setState({title: event.target.value})
         }
-        if (event.target.id === "author-input") {
+        else if (event.target.className === "author-input") {
             this.setState({author: event.target.value})
         }
-        if (event.target.id === "description-textarea") {
+        else if (event.target.className === "description-textarea") {
             this.setState({description: event.target.value})
         }
-        if (event.target.className === "question-input") {
-            state.questions[0].question = event.target.value;  //need to change correct index
+        else if (event.target.className === "question-input") {
+            state.questions[event.target.getAttribute("question-id")].question = event.target.value;
             this.setState({questions: state.questions})
         }
         else {
-            console.log("woops didnt handle change");
+            console.log("woops didnt handle change"+event.target);
         }
     }
 
@@ -64,7 +64,7 @@ class CreateQuizForm extends React.Component {
         return (
             <EditableList deleteItemButtonClassName="delete-question-button"
                           deleteItemButtonText="delete question"
-                          list={this.state.questions.map(question=><QuestionListItem onClick={this.handleClick} question={question}/>)}
+                          list={this.state.questions.map((question,index)=><QuestionListItem onChange={this.handleChange} onClick={this.handleClick} question={question} questionId={index}/>)}
                           listClassName="question-list"
                           onClick={this.handleClick}
                           />
@@ -73,7 +73,7 @@ class CreateQuizForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form className="create-quiz-form" onSubmit={this.handleSubmit}>
               <div className="title-wrapper">
                 <label className="title-label">Title: </label>
                 <input className="title-input" type="text" onChange={this.handleChange} ></input>
@@ -86,9 +86,11 @@ class CreateQuizForm extends React.Component {
                 <label className="description-label">Description: </label>
                 <textarea className="description-textarea" onChange={this.handleChange} ></textarea>
               </div>
-              {this.renderQuestionList()}
-              <button className="add-question-button" onClick={this.handleClick}>add question</button>
-              <button id="submit-button" type="submit">Submit</button>
+              <div className="question-list-wrapper">
+                {this.renderQuestionList()}
+                <button className="add-question-button" onClick={this.handleClick}>add question</button>
+              </div>
+              <button className="submit-button" type="submit">Submit</button>
             </form>
         )
     }
@@ -122,8 +124,8 @@ class QuestionListItem extends React.Component {
         return (
             <div className="question-item-wrapper">
               <div className="question-wrapper">
-                <label className="question-label">Question: </label>
-                <input className="question-input" type="text" onChange={this.props.onChange} defaultValue={this.props.question.question}></input>
+                <label className="question-label" >Question: </label>
+                <input className="question-input" type="text" onChange={this.props.onChange} defaultValue={this.props.question.question} question-id={this.props.questionId}></input>
               </div>
               <div className="correct-answer-wrapper">
                 <label className="correct-answer-label">Correct: </label>
