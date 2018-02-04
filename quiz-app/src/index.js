@@ -5,7 +5,7 @@ import CreateQuizForm from './components/create-quiz-form/CreateQuizForm.js'
 import App from './components/app/App.js';
 import registerServiceWorker from './registerServiceWorker';
 
-import EditableList from './components/create-quiz-form/EditableList'
+import DeletableList from './components/create-quiz-form/DeletableList'
 
 class Test extends React.Component {
 
@@ -28,7 +28,7 @@ class Test extends React.Component {
             console.log(event.currentTarget)
         }
         if (event.target.className === 'addItemButton') {
-            this.setState(prevState=>({components: prevState.components.concat(<EditableList onClick={this.handleClick}/>)}))
+            this.setState(prevState=>({components: prevState.components.concat(<DeletableList onClick={this.handleClick}/>)}))
         }
     }
 
@@ -40,7 +40,7 @@ class Test extends React.Component {
 
         return (
             <div>
-                <EditableList components={components} onClick={this.handleClick} />
+                <DeletableList components={components} onClick={this.handleClick} />
                 {this.state.components.length}
             </div>
         )

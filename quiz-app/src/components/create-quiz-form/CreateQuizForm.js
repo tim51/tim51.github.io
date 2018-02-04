@@ -1,5 +1,5 @@
 import React from 'react';
-import EditableList from './EditableList';
+import DeletableList from './DeletableList';
 import './CreateQuizForm.css';
 
 class CreateQuizForm extends React.Component {
@@ -9,17 +9,30 @@ class CreateQuizForm extends React.Component {
             title: null,
             author: null,
             description: null,
-            questions: [
-                {
-                    question: "1+1?",
-                    correctAnswers: ["2"],
-                    incorrectAnswers: ["1","3"], 
+            questionList: [{
+                question: null,
+                id: null,
+                correctAnswers: [null,],
+                incorrectAnswers: [null,],
                 }],
+            nextAvailableId: 1,
         }
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount() {
+        let state = {...this.state};
+        this.setState({
+            questionList: state.questionList.concat({
+                question: "What is 1+1?",
+                id: state.nextAvailableId,
+                correctAnswers: ["2"],
+                incorrectAnswers: ["1","3","4"], 
+                }),
+            nextAvailableId: state.nextAvailableId++,
+        })
     }
 
     handleSubmit(event) {
@@ -40,8 +53,8 @@ class CreateQuizForm extends React.Component {
             this.setState({description: event.target.value})
         }
         else if (event.target.className === "question-input") {
-            state.questions[event.target.getAttribute("question-id")].question = event.target.value;
-            this.setState({questions: state.questions})
+            state.questionList.indexOf[event.target].question = event.target.value; //here
+            this.setState({questionList: state.questionList})
         }
         else {
             console.log("woops didnt handle change"+event.target);
@@ -52,19 +65,30 @@ class CreateQuizForm extends React.Component {
         let state = {...this.state};
 
         if (event.target.className === "add-question-button") {
-            this.setState({questions: state.questions.concat({
-                question: null,
-                correctAnswers: [], 
-                incorrectAnswers: [],
-            })})
+            this.setState({
+                questionList: state.questionList.concat({
+                    question: null,
+                    id: state.nextAvailableId,
+                    correctAnswers: [], 
+                    incorrectAnswers: [],
+                    }),
+                nextAvailableId: state.nextAvailableId++,
+            })
+        }
+        else if (event.target.className === "delete-question-button"){  ///doesnt work
+            console.log(event.target.previousSibling);
+            state.questionList.splice(event.target.previousSibling.getAttribute("questionId"),1) //need id of question
+            this.setState({questionList: state.questionList})
+        } else {
+            console.log("woops didnt handle click"+event.target);
         }
     }
 
     renderQuestionList() {
         return (
-            <EditableList deleteItemButtonClassName="delete-question-button"
+            <DeletableList deleteItemButtonClassName="delete-question-button"
                           deleteItemButtonText="delete question"
-                          list={this.state.questions.map((question,index)=><QuestionListItem onChange={this.handleChange} onClick={this.handleClick} question={question} questionId={index}/>)}
+                          list={this.state.questionList.map((question,index)=><QuestionListItem onChange={this.handleChange} onClick={this.handleClick} question={question}/>)}
                           listClassName="question-list"
                           onClick={this.handleClick}
                           />
@@ -96,11 +120,23 @@ class CreateQuizForm extends React.Component {
     }
 }
 
+class QuestionList extends React.component {
+
+    render() {
+        let questionList = {...this.props.questionList};
+        for ()
+        return (
+
+        )
+    }
+
+}
+
 class QuestionListItem extends React.Component {
 
     renderCorrectAnswerList() {
         return (
-            <EditableList deleteItemButtonClassName="delete-answer-button"
+            <DeletableList deleteItemButtonClassName="delete-answer-button"
                           deleteItemButtonText="delete answer"
                           list={this.props.question.correctAnswers.map(answer => <AnswerListItem answer={answer}/>)}
                           listClassName="answer-list"
@@ -111,7 +147,7 @@ class QuestionListItem extends React.Component {
 
     renderIncorrectAnswerList() {
         return (
-            <EditableList deleteItemButtonClassName="delete-answer-button"
+            <DeletableList deleteItemButtonClassName="delete-answer-button"
                           deleteItemButtonText="delete answer"
                           list={this.props.question.incorrectAnswers.map(answer => <AnswerListItem answer={answer}/>)}
                           listClassName="answer-list"
@@ -125,17 +161,17 @@ class QuestionListItem extends React.Component {
             <div className="question-item-wrapper">
               <div className="question-wrapper">
                 <label className="question-label" >Question: </label>
-                <input className="question-input" type="text" onChange={this.props.onChange} defaultValue={this.props.question.question} question-id={this.props.questionId}></input>
+                <input className="question-input" type="text" onChange={this.props.onChange} defaultValue={this.props.question.question}></input>
               </div>
               <div className="correct-answer-wrapper">
                 <label className="correct-answer-label">Correct: </label>
                 {this.renderCorrectAnswerList()}
-                <button className="add-answer-button" onClick={this.props.onClick}>add answer</button>
+                <button className="add-answer-button" onClick={this.props.onClick} type="button">add answer</button>
               </div>
               <div className="incorrect-answer-wrapper">
                 <label>Incorrect: </label>
                 {this.renderIncorrectAnswerList()}
-                <button className="add-answer-button" onClick={this.props.onClick}>add answer</button>
+                <button className="add-answer-button" onClick={this.props.onClick} type="button">add answer</button>
               </div>
             </div>
         )
