@@ -1,5 +1,11 @@
-const temp = (state , action) => {
-    return state
-}
+import { combineReducers } from 'redux'
 
-export default temp
+import author from './author'
+import description from './description'
+
+const reducer = combineReducers({
+  author,
+  description,
+})
+
+export default reducer
