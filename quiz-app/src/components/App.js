@@ -1,14 +1,13 @@
 import React from 'react';
+
 import './App.css';
-import Header from '../header/Header.js'
-import CreateQuizForm from '../create-quiz-form/CreateQuizForm.js'
+import Header from './Header'
 
 class App extends React.Component {
   render() {
     return (
       <div id="app">
         <Header />
-        <CreateQuizForm />
       </div>
     );
   }
