@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
+import '../css/top-nav.css'
+
 export default class TopNav extends React.Component {
 
     state = {
@@ -16,7 +18,7 @@ export default class TopNav extends React.Component {
 
         return (
             <ul className="top-nav-list">
-              <li className="top-nav-item"><Link to="/home">Home</Link></li>
+              <li className="top-nav-item"><Link to="/">Home</Link></li>
               <li className="top-nav-item"><Link to="/quiz">Quiz</Link></li>
               <li className="top-nav-item"><Link to="/create">Create</Link></li>
               <li className="top-nav-item">
