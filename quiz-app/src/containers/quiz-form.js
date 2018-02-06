@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
-import { addQuestion, setAuthor, setTitle } from '../actions/index'
+import { addQuestion, setAuthor, setTitle, setLastQuestionIdAsActive } from '../actions/index'
 import QuestionList from './question-list'
 
 QuizForm.propTypes = {
@@ -34,7 +34,10 @@ function QuizForm({onAddQuestion, onAuthorChange, onSubmit, onTitleChange}) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddQuestion: () => (dispatch(addQuestion())),
+    onAddQuestion: () => {
+      dispatch(addQuestion())
+      dispatch(setLastQuestionIdAsActive())
+    },
     onAuthorChange: (event) => (dispatch(setAuthor(event.target.value))),
     onTitleChange: (event) => (dispatch(setTitle(event.target.value))),
   }

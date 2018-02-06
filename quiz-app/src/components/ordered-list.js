@@ -1,10 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const OrderedList = ({active, list, onClick}) => {
+const OrderedList = ({activeItem, list, onClick}) => {
     return (
         <ol>
-          {list.map((value,index) => <li key={index}>{value}</li>)}
+          {list.map((value,index) => <li key={index}>
+                                       <button onClick={onClick} 
+                                               style={(activeItem == value)?{backgroundColor: 'red'}:{}} 
+                                               type="button" id={value}>
+                                         {"question id: "+value}
+                                       </button>
+                                      </li>
+            )}
         </ol>
     )
 }
