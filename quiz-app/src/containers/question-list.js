@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 
 class QuestionList extends React.Component {
 
-    
-
     render() {
         const {questionList, ...otherProps} = this.props
         return (
@@ -17,7 +15,7 @@ class QuestionList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        questionList: state.questionList,
+        questionIdList: state.questionIdList,
     }
 }
 

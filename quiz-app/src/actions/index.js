@@ -6,12 +6,11 @@ const SET_AUTHOR = 'SET_AUTHOR'
 const SET_QUESTION = 'SET_QUESTION'
 const SET_TITLE = 'SET_TITLE'
 
-export const addQuestion = (question) => {
+export const addQuestion = () => {
     return (
         {
             type: ADD_QUESTION,
             id: nextQuestionId++,
-            question: question,
         }
     )
 }
