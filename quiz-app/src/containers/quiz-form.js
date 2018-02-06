@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+
+import { addQuestion, setAuthor, setTitle } from '../actions/index'
+import QuestionList from './question-list'
 
 QuizForm.propTypes = {
     onAddQuestion: PropTypes.func.isRequired,
     onAuthorChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func, //////////////////////////here
     onTitleChange: PropTypes.func.isRequired,
 }
 
@@ -20,7 +24,7 @@ function QuizForm({onAddQuestion, onAuthorChange, onSubmit, onTitleChange}) {
             <input className="author-input" type="text" onChange={onAuthorChange} ></input>
           </div> 
           <div className="question-list-wrapper">
-        
+            <QuestionList />
             <button className="add-question-button" onClick={onAddQuestion} type="button">add question</button>
           </div>
           <button className="submit-button" type="submit">Submit</button>
@@ -28,4 +32,12 @@ function QuizForm({onAddQuestion, onAuthorChange, onSubmit, onTitleChange}) {
     )
 }
 
-export default QuizForm
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddQuestion: (event) => (dispatch(addQuestion(null))),
+    onAuthorChange: (event) => (dispatch(setAuthor(event.target.value))),
+    onTitleChange: (event) => (dispatch(setTitle(event.target.value))),
+  }
+}
+
+export default QuizForm = connect(null, mapDispatchToProps)(QuizForm)

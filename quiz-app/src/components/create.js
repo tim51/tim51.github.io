@@ -1,6 +1,6 @@
 import React from 'react'
 
-import QuizForm from './quiz-form'
+import QuizForm from '../containers/quiz-form'
 
 export default class Create extends React.Component {
 
