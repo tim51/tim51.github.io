@@ -1,24 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-class QuestionList extends React.Component {
-
-    render() {
-        const {questionList, ...otherProps} = this.props
-        return (
-            <ol className="question-list">
-              {this.props.questionList.map(question => <li>a</li>)}
-            </ol>
-        )
-    }
-}
+import OrderedList from '../components/ordered-list'
 
 const mapStateToProps = (state) => {
     return {
-        questionIdList: state.questionIdList,
+        list: state.questionIdList.sort(),
     }
 }
 
-QuestionList = connect(mapStateToProps,null)(QuestionList)
+const QuestionList = connect(mapStateToProps,null)(OrderedList)
 
 export default QuestionList

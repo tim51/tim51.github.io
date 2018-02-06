@@ -34,10 +34,12 @@ function QuizForm({onAddQuestion, onAuthorChange, onSubmit, onTitleChange}) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddQuestion: (event) => (dispatch(addQuestion(null))),
+    onAddQuestion: () => (dispatch(addQuestion())),
     onAuthorChange: (event) => (dispatch(setAuthor(event.target.value))),
     onTitleChange: (event) => (dispatch(setTitle(event.target.value))),
   }
 }
 
-export default QuizForm = connect(null, mapDispatchToProps)(QuizForm)
+QuizForm = connect(null, mapDispatchToProps)(QuizForm)
+
+export default QuizForm

@@ -7,6 +7,7 @@ import title from './title'
 
 const reducer = combineReducers({
   author,
+  questionIdList,
   questionList,
   title,
 })
