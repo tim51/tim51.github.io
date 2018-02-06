@@ -3,7 +3,6 @@ let nextQuestionId = 0;
 const ADD_QUESTION = 'ADD_QUESTION'
 const DELETE_QUESTION = 'DELETE_QUESTION'
 const SET_AUTHOR = 'SET_AUTHOR'
-const SET_DESCRIPTION = 'SET_DESCRIPTION'
 const SET_QUESTION = 'SET_QUESTION'
 const SET_TITLE = 'SET_TITLE'
 
@@ -31,15 +30,6 @@ export const setAuthor = (author) => {
         {
             type: SET_AUTHOR,
             author: author,
-        }
-    )
-}
-
-export const setDescription = (description) => {
-    return (
-        {
-            type: SET_DESCRIPTION,
-            description: description,
         }
     )
 }
